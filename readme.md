@@ -1,5 +1,7 @@
 # NoteManager App
-A full-stack app built with Node.js, Express, MongoDB, and EJS. This is a user-friendly note-taking application that allows users to create multiple lists and add tasks to those lists. Built to practice integrating Node.js with MongoDB and emphasizing a sleek and responsive UI across different devices.
+A full-stack app built with Node.js, Express, MongoDB, and EJS. 
+
+This is a user-friendly note-taking application that allows users to create multiple lists and add tasks to those lists. Built to practice integrating Node.js with MongoDB and emphasizing a sleek and responsive UI across different devices.
 
 ## Tech Stack
 
@@ -29,6 +31,7 @@ Set the connection URI in `.env`
 
 ### Run the app
 npm start
+
 The app will run on port 3000
 
 ## TODO
