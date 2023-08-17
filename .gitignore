@@ -1,0 +1,8 @@
+# Exclude package.json
+package.json
+
+# Exclude all .env files
+*.env
+
+# Exclude node_modules folder
+node_modules/

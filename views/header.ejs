@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NoteManager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    
+</head>
+<div class="container">
+    <div class="left-column">
+        
+
+        
+        <div class="sidenav">
+
+            <div class="create-list">
+                <button class="btn btn-secondary py-2 px-3 mb-2 border border-white text-white" title="Create a new list" id="new-list-btn">
+                    <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    New List
+                </button>
+            </div>
+
+            <div class="list-name-container bg-light">
+                <form action="/lists" id="list-name-form" style="display: none;"  method="POST">
+                        <input class="form-control" name="createList" type="text" placeholder="Enter list name" autocomplete="off" required/>
+                        <button title="Click to save new list" class="btn btn-primary"type="submit">Submit</button>
+                </form> 
+            </div>
+            
+            <hr class="separator">
+
+            <div>
+                <a class="navbar-brand" title="Homepage" href="/">
+                    <i class="fa fa-home"></i> Home
+                  </a>
+            </div>
+            
+            <div>
+                <button class="dropdown-btn" title="Click for dropdown menu of Saved Lists" onclick="toggleDropdown()">Saved Lists
+                    <i class="fa fa-caret-down"></i>
+                </button>
+            </div>
+
+            <div class="dropdown-content" id="dropdown-content">
+                <% allLists.forEach(function(list) { %>
+                    <% if (list.name !== "Welcome to task app") { %>
+                      <div class="list-container">
+                        <div class="list-text">
+                          <a title="Click to go to custom list" href="/lists/<%= encodeURIComponent(list.name) %>"><%= list.name %> 
+                            <% let incompletedCount = list.items.filter(item => !item.completed).length %>
+                            <% if (incompletedCount > 0) { %>
+                                 <span class="badge badge-pill badge-primary" title="Number of unfinished tasks">
+                                <span class="badge-counter">
+                                  (<%= incompletedCount %>)
+                                </span>
+                              </span>
+                            <% } %>
+                          </a>
+                          <i class="fa fa-pencil edit-list fa-sm" name="pencil" title="Edit list name" data-toggle="modal" data-target="#editList" data-item-id="<%= JSON.stringify([list.name]) %>" onClick="edit_list(event)"></i>
+                          <i class="fa fa-trash-o trash-list" name="trashcan" title="Delete entire list" data-toggle="modal" data-target="#deleteList" data-item-id="<%= JSON.stringify([list.name]) %>" onClick="delete_list(event)"></i>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% }); %>
+              </div>
+        </div>
+    </div>

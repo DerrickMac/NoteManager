@@ -1,0 +1,156 @@
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+	<script type="text/javascript">
+		function toggleDropdown() {
+			var dropdown = document.getElementById("dropdown-content");
+			if (dropdown.style.display === "none") {
+				dropdown.style.display = "block";
+			} else {
+				dropdown.style.display = "none";
+			}
+		}
+	</script>
+    
+    <script>
+        var newListBtn = document.getElementById("new-list-btn");
+        var newListForm = document.getElementById("list-name-form");
+
+        newListBtn.addEventListener("click", function() {
+            if (newListForm.style.display === "none") {
+                newListForm.style.display = "block";
+            } else {
+                newListForm.style.display = "none";
+            }
+        });
+    </script>
+
+    <script>
+        function change_completed(event) {
+            const itemID = JSON.parse(event.target.value)[0]
+            const isChecked = JSON.parse(event.target.value)[1]
+            const itemName = JSON.parse(event.target.value)[2]
+            console.log(itemID)
+            console.log(isChecked)
+            const oppositeValue = !isChecked
+
+            if (!isChecked) {
+                var form = $('#new-tasks');    
+                form.attr('action', '/change-completed');
+                var formAction = form.attr('action');
+                console.log('Original form action:', formAction);
+
+                form.attr('action', formAction + '/' + itemID + '/' + oppositeValue + '?' + '_method=PATCH');
+                console.log('Updated form action:', form.attr('action'));
+                form.submit();
+
+            } else {
+                var form = $('#completed-tasks');
+                console.log(form)    
+                form.attr('action', '/change-completed');
+
+                var formAction = form.attr('action');
+                console.log('Original form action:', formAction);
+
+                form.attr('action', formAction + '/' + itemID + '/' + oppositeValue + '?' + '_method=PATCH');
+                console.log('Updated form action:', form.attr('action'));
+                form.submit();
+            }
+        }
+            
+    </script>
+
+    <script>
+    function edit_list(event) {
+        var pencilIcon = event.target
+        console.log(pencilIcon)
+        var oldListTitle = JSON.parse(pencilIcon.dataset.itemId);
+        console.log(oldListTitle)
+        const encodedName = encodeURIComponent(oldListTitle);
+
+        var modal = $('#editList');
+        modal.find('#edit-list-name').val(oldListTitle)
+
+        var form = $('#edit-list-form');    
+        form.attr('action', '/edit-list-name');
+        var formAction = form.attr('action');
+        console.log('Original form action:', formAction);
+
+        form.attr('action', formAction + '/' + encodedName + '?' + '_method=PATCH');
+        console.log('Updated form action:', form.attr('action'));    
+    }
+        
+    </script>
+
+<script>
+    function edit_task(event) {
+        var pencilIcon = event.target
+        console.log(pencilIcon)
+        var data = JSON.parse(pencilIcon.dataset.itemId);
+        const _id = data[0]
+        const listTitle = data[1]
+        const taskContent = data[2]
+        const encodedName = encodeURIComponent(listTitle);
+        console.log(_id)
+        console.log(listTitle)
+        console.log(taskContent)
+        
+        var modal = $('#editTask');
+        modal.find('#edit-task-content').val(taskContent)
+
+        var form = $('#edit-task-form');    
+        form.attr('action', '/edit-task-content');
+        var formAction = form.attr('action');
+        console.log('Original form action:', formAction);
+
+        form.attr('action', formAction + '/' + encodedName + '/' + _id + '?' + '_method=PATCH');
+        console.log('Updated form action:', form.attr('action'));    
+    }
+        
+    </script>
+
+    <script>
+    function delete_list(event) {
+        var trashIcon = event.target
+        console.log(trashIcon)
+        var listTitle = JSON.parse(trashIcon.dataset.itemId);
+        console.log(listTitle)
+        const encodedName = encodeURIComponent(listTitle);
+        var form = $('#delete-list-form');    
+        form.attr('action', '/delete');
+        var formAction = form.attr('action');
+        console.log('Original form action:', formAction);
+
+        form.attr('action', formAction + '/' + encodedName + '?' + '_method=DELETE');
+        console.log('Updated form action:', form.attr('action'));    
+    }
+        
+    </script>
+
+    <script>
+        function delete_task(event) {
+            var trashIcon = event.target
+            console.log(trashIcon)
+            var itemId = JSON.parse(trashIcon.dataset.itemId);
+            console.log(itemId)
+            var _id = itemId[0];
+            var listTitle = itemId[1];
+            console.log(_id)
+            console.log(listTitle)
+            const encodedName = encodeURIComponent(listTitle);
+            var form = $('#delete-task-form');    
+            form.attr('action', '/delete');
+            var formAction = form.attr('action');
+            console.log('Original form action:', formAction);
+
+            form.attr('action', formAction + '/' + encodedName + '/' + _id + '?' + '_method=DELETE');
+            console.log('Updated form action:', form.attr('action'));    
+        }
+            
+    </script>
+
+
+</div>
+
+</html>
